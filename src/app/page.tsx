@@ -3,6 +3,7 @@ import Image from "next/image";
 import { CategorySelector } from "@/components/core/category-selector";
 import { Footer } from "@/components/core/footer";
 import { Header } from "@/components/core/header";
+import { PartnersList } from "@/components/core/partners-list";
 import { ProductList } from "@/components/core/product-list";
 import { db } from "@/db";
 import { productTable } from "@/db/schema";
@@ -38,6 +39,8 @@ export default async function Home() {
             className="h-auto w-full"
           />
         </div>
+
+        <PartnersList title="Marcas parceiras" />
 
         <ProductList products={products} title="Mais vendidos" />
 
