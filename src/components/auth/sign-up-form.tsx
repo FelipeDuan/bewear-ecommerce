@@ -55,7 +55,7 @@ export default function SignUpForm() {
   });
 
   async function onSubmit(values: FormValues) {
-    const { data, error } = await authClient.signUp.email({
+    await authClient.signUp.email({
       name: values.name,
       email: values.email,
       password: values.password,
@@ -63,14 +63,14 @@ export default function SignUpForm() {
         onSuccess: () => {
           router.push("/");
         },
-        onError: (error) => {
-          if (error.error.code === "USER_ALREADY_EXISTS") {
+        onError: (ctx) => {
+          if (ctx.error.code === "USER_ALREADY_EXISTS") {
             toast.error("Email ou senha inválidos.");
+            return form.setError("email", {
+              message: "Email já cadastrado.",
+            });
           }
-          form.setError("email", {
-            message: "Email já cadastrado.",
-          });
-          toast.error(error.error.message);
+          toast.error(ctx.error.message);
         },
       },
     });
