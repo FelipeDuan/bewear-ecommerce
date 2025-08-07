@@ -2,14 +2,19 @@ import Image from "next/image";
 import Link from "next/link";
 import type { productTable, productVariantTable } from "@/db/schema";
 import { formatCentsToBRL } from "@/helpers/money";
+import { cn } from "@/lib/utils";
 
 interface ProductItemProps {
   product: typeof productTable.$inferSelect & {
     variants: (typeof productVariantTable.$inferSelect)[];
   };
+  textContainerClassName?: string;
 }
 
-export function ProductItem({ product }: ProductItemProps) {
+export function ProductItem({
+  product,
+  textContainerClassName,
+}: ProductItemProps) {
   const firstVariant = product.variants[0];
 
   return (
@@ -17,12 +22,18 @@ export function ProductItem({ product }: ProductItemProps) {
       <Image
         src={firstVariant.imageUrl}
         alt={firstVariant.name}
-        width={200}
-        height={200}
-        className="rounded-3xl"
+        sizes="100vw"
+        width={0}
+        height={0}
+        className="h-auto w-full rounded-3xl"
       />
 
-      <div className="flex flex-col max-w-[200px] gap-1">
+      <div
+        className={cn(
+          "flex flex-col max-w-[200px] gap-1",
+          textContainerClassName
+        )}
+      >
         <p className="truncate text-sm font-medium">{product.name}</p>
         <p className="truncate text-xs text-muted-foreground font-medium">
           {product.description}
