@@ -16,7 +16,7 @@ export function PartnerItem({ partner }: PartnerItemProps) {
   return (
     <Link
       href={"/"}
-      className="flex flex-col items-center gap-3 min-w-[120px] flex-shrink-0"
+      className="flex flex-col items-center gap-3 min-w-[110px] flex-shrink-0"
     >
       <Button
         variant="outline"
