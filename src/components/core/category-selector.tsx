@@ -15,6 +15,7 @@ export function CategorySelector({ categories }: CategorySelectorProps) {
             key={category.id}
             variant={"ghost"}
             className="bg-white rounded-3xl font-semibold text-xs"
+            asChild
           >
             <Link href={`/category/${category.slug}`}>{category.name}</Link>
           </Button>
