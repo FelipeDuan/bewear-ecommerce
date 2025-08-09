@@ -2,9 +2,11 @@
 
 import { eq } from "drizzle-orm";
 import { headers } from "next/headers";
+
 import { db } from "@/db";
 import { cartItemTable, cartTable } from "@/db/schema";
 import { auth } from "@/lib/auth";
+
 import { type AddProductToCartSchema, addProductToCartSchema } from "./schema";
 
 export const addProductToCart = async (data: AddProductToCartSchema) => {
@@ -18,7 +20,7 @@ export const addProductToCart = async (data: AddProductToCartSchema) => {
     throw new Error("Unauthorized");
   }
 
-  const productVariant = await db.query.productTable.findFirst({
+  const productVariant = await db.query.productVariantTable.findFirst({
     where: (productVariant, { eq }) =>
       eq(productVariant.id, data.productVariantId),
   });
@@ -27,7 +29,6 @@ export const addProductToCart = async (data: AddProductToCartSchema) => {
     throw new Error("Product variant not found");
   }
 
-  // Pegar o carrinho
   const cart = await db.query.cartTable.findFirst({
     where: (cart, { eq }) => eq(cart.userId, session.user.id),
   });
@@ -45,7 +46,6 @@ export const addProductToCart = async (data: AddProductToCartSchema) => {
     cartId = newCart.id;
   }
 
-  // Verificar se a variant já existe no carrinho
   const cartItem = await db.query.cartItemTable.findFirst({
     where: (cartItem, { eq }) =>
       eq(cartItem.cartId, cartId) &&
@@ -63,7 +63,6 @@ export const addProductToCart = async (data: AddProductToCartSchema) => {
     return;
   }
 
-  // Cenário de: o item não existe
   await db.insert(cartItemTable).values({
     cartId,
     productVariantId: data.productVariantId,

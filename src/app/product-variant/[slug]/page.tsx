@@ -3,10 +3,9 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Footer } from "@/components/core/footer";
 import { Header } from "@/components/core/header";
+import { ProductActions } from "@/components/core/product-actions";
 import { ProductList } from "@/components/core/product-list";
-import { QuantitySelector } from "@/components/core/quantity-selector";
 import { VariantSelector } from "@/components/core/variants-selector";
-import { Button } from "@/components/ui/button";
 import { db } from "@/db";
 import { productTable, productVariantTable } from "@/db/schema";
 import { formatCentsToBRL } from "@/helpers/money";
@@ -76,18 +75,7 @@ export default async function ProductVariantPage({
           </div>
         </div>
 
-        <div className="px-5">
-          <QuantitySelector />
-        </div>
-
-        <div className="flex flex-col gap-4 px-5">
-          <Button className="rounded-full" size={"lg"} variant={"outline"}>
-            Adicionar à sacola
-          </Button>
-          <Button className="rounded-full" size={"lg"}>
-            Comprar agora
-          </Button>
-        </div>
+        <ProductActions productVariantId={productVariant.id} />
 
         <div className="text-sm text-muted-foreground px-5">
           {productVariant.product.description}
