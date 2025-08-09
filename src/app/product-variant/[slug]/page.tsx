@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { Footer } from "@/components/core/footer";
 import { Header } from "@/components/core/header";
 import { ProductList } from "@/components/core/product-list";
+import { VariantSelector } from "@/components/core/variants-selector";
 import { Button } from "@/components/ui/button";
 import { db } from "@/db";
 import { productTable, productVariantTable } from "@/db/schema";
@@ -20,7 +21,9 @@ export default async function ProductVariantPage({
   const productVariant = await db.query.productVariantTable.findFirst({
     where: eq(productVariantTable.slug, slug),
     with: {
-      product: true,
+      product: {
+        with: { variants: true },
+      },
     },
   });
 
@@ -47,6 +50,13 @@ export default async function ProductVariantPage({
             width={0}
             height={0}
             className="h-auto w-full object-cover rounded-3xl"
+          />
+        </div>
+
+        <div className="px-5">
+          <VariantSelector
+            selectVariantSlug={productVariant.slug}
+            variants={productVariant.product.variants}
           />
         </div>
 
