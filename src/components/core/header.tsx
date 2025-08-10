@@ -25,6 +25,10 @@ export function Header() {
       </Link>
 
       <div className="flex items-center gap-3">
+        <Cart />
+
+        <div className="w-px h-6 bg-zinc-200" />
+
         <Sheet>
           <SheetTrigger asChild>
             <Button variant="outline" size="icon">
@@ -80,7 +84,6 @@ export function Header() {
             </div>
           </SheetContent>
         </Sheet>
-        <Cart />
       </div>
     </header>
   );
