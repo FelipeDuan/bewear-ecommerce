@@ -17,7 +17,7 @@ import { Separator } from "../ui/separator";
 import { CartItem } from "./cart-item";
 
 export function Cart() {
-  const { data: cart, isPending: cartIsLoading } = useQuery({
+  const { data: cart } = useQuery({
     queryKey: ["cart"],
     queryFn: () => getCart(),
   });
